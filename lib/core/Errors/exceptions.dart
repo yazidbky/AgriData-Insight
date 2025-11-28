@@ -66,8 +66,9 @@ void handleDioException(DioException e) {
     case DioExceptionType.connectionError:
       throw ConnectionErrorException(
         ErrorModel(
-          status: 0,
-          errorMessage:
+          success: false,
+          statusCode: 0,
+          message:
               'Cannot connect to server. Please check your internet connection.',
         ),
       );
@@ -76,8 +77,9 @@ void handleDioException(DioException e) {
     case DioExceptionType.connectionTimeout:
       throw ConnectionTimeoutException(
         ErrorModel(
-          status: 0,
-          errorMessage: 'Connection timeout. Please try again.',
+          success: false,
+          statusCode: 0,
+          message: 'Connection timeout. Please try again.',
         ),
       );
 
@@ -100,32 +102,34 @@ void handleDioException(DioException e) {
       switch (statusCode) {
         case 400:
           throw BadResponseException(
-            ErrorModel(status: statusCode, errorMessage: errorMessage),
+            ErrorModel(success: false, statusCode: statusCode, message: errorMessage),
           );
         case 401:
           throw UnauthorizedException(
-            ErrorModel(status: statusCode, errorMessage: 'Unauthorized access'),
+            ErrorModel(success: false, statusCode: statusCode, message: errorMessage.isNotEmpty ? errorMessage : 'Unauthorized access'),
           );
         case 403:
           throw ForbiddenException(
-            ErrorModel(status: statusCode, errorMessage: 'Access forbidden'),
+            ErrorModel(success: false, statusCode: statusCode, message: errorMessage.isNotEmpty ? errorMessage : 'Access forbidden'),
           );
         case 404:
           throw NotFoundException(
-            ErrorModel(status: statusCode, errorMessage: 'Service not found'),
+            ErrorModel(success: false, statusCode: statusCode, message: errorMessage.isNotEmpty ? errorMessage : 'Service not found'),
           );
         case 409:
           throw CofficientException(
             ErrorModel(
-              status: statusCode,
-              errorMessage: 'Data conflict - may already exist',
+              success: false,
+              statusCode: statusCode,
+              message: errorMessage.isNotEmpty ? errorMessage : 'Data conflict - may already exist',
             ),
           );
         case 500:
           throw ServerException(
             ErrorModel(
-              status: statusCode,
-              errorMessage: errorMessage.isNotEmpty
+              success: false,
+              statusCode: statusCode,
+              message: errorMessage.isNotEmpty
                   ? errorMessage
                   : 'Internal server error',
             ),
@@ -133,20 +137,21 @@ void handleDioException(DioException e) {
         default:
           throw ServerException(
             ErrorModel(
-              status: statusCode,
-              errorMessage: 'Server error ($statusCode): $errorMessage',
+              success: false,
+              statusCode: statusCode,
+              message: 'Server error ($statusCode): $errorMessage',
             ),
           );
       }
 
     case DioExceptionType.cancel:
       throw CancelException(
-        ErrorModel(errorMessage: e.toString(), status: 500),
+        ErrorModel(success: false, statusCode: 500, message: 'Request cancelled'),
       );
 
     case DioExceptionType.unknown:
       throw UnknownException(
-        ErrorModel(errorMessage: e.toString(), status: 500),
+        ErrorModel(success: false, statusCode: 500, message: e.message ?? 'Unknown error occurred'),
       );
   }
 }

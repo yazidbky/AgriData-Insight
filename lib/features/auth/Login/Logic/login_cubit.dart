@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:makers_hackathon/core/Errors/api_errors.dart';
-import 'package:makers_hackathon/features/auth/Login/Data/Api/login_api_service.dart';
-import 'package:makers_hackathon/features/auth/Login/Data/Models/login_request_model.dart';
-import 'package:makers_hackathon/features/auth/Login/Logic/login_state.dart';
+import 'package:makers_hackathon/core/Errors/exceptions.dart';
+import 'package:makers_hackathon/features/Auth/Login/Data/Api/login_api_service.dart';
+import 'package:makers_hackathon/features/Auth/Login/Data/Models/login_request_model.dart';
+import 'package:makers_hackathon/features/Auth/Login/Logic/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginApiService apiService ;
@@ -27,6 +28,8 @@ class LoginCubit extends Cubit<LoginState> {
       } else {
         emit(LoginFailure(response.message.isNotEmpty ? response.message : ApiErrors.unknownError));
       }
+    } on ServerException catch (e) {
+      emit(LoginFailure(e.errorModel.message));
     } catch (e) {
       emit(LoginFailure(ApiErrors.unknownError));
     }

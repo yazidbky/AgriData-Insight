@@ -1,12 +1,25 @@
 class ErrorModel {
-  final int status;
-  final String errorMessage;
+  final bool success;
+  final int statusCode;
+  final String message;
 
-  ErrorModel({required this.status, required this.errorMessage});
-  factory ErrorModel.fromJson(Map jsonData) {
+  ErrorModel({
+    required this.success,
+    required this.statusCode,
+    required this.message,
+  });
+
+  factory ErrorModel.fromJson(Map<String, dynamic> jsonData) {
     return ErrorModel(
-      errorMessage: jsonData["Message"],
-      status: jsonData["status"],
+      success: jsonData["success"] ?? false,
+      statusCode: jsonData["statusCode"] ?? 0,
+      message: jsonData["message"] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'success': success,
+        'statusCode': statusCode,
+        'message': message,
+      };
 }

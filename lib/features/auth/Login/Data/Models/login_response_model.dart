@@ -1,4 +1,4 @@
-import 'package:makers_hackathon/features/auth/Login/Data/Models/Sub%20Models/data_model.dart';
+import 'package:makers_hackathon/features/Auth/Login/Data/Models/Sub%20Models/data_model.dart';
 
 class LoginResponseModel {
 

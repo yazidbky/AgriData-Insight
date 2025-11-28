@@ -1,7 +1,7 @@
 import 'package:makers_hackathon/core/Database/api_consumer.dart';
 import 'package:makers_hackathon/core/constants/Endpoint.dart';
-import 'package:makers_hackathon/features/auth/Login/Data/Models/login_request_model.dart';
-import 'package:makers_hackathon/features/auth/Login/Data/Models/login_response_model.dart';
+import 'package:makers_hackathon/features/Auth/Login/Data/Models/login_request_model.dart';
+import 'package:makers_hackathon/features/Auth/Login/Data/Models/login_response_model.dart';
 
 
 class LoginApiService {

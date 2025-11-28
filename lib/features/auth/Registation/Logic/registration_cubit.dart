@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:makers_hackathon/core/Errors/api_errors.dart' show ApiErrors;
-import 'package:makers_hackathon/features/auth/Registation/Data/Api/registation_api_service.dart';
-import 'package:makers_hackathon/features/auth/Registation/Data/Models/registration_request_model.dart';
-import 'package:makers_hackathon/features/auth/Registation/Logic/registration_state.dart';
+import 'package:makers_hackathon/core/Errors/exceptions.dart';
+import 'package:makers_hackathon/features/Auth/Registation/Data/Api/registation_api_service.dart';
+import 'package:makers_hackathon/features/Auth/Registation/Data/Models/registration_request_model.dart';
+import 'package:makers_hackathon/features/Auth/Registation/Logic/registration_state.dart';
 
 class RegistrationCubit extends Cubit<RegistrationState>{
   final RegistationApiService apiService ;
@@ -27,6 +28,8 @@ class RegistrationCubit extends Cubit<RegistrationState>{
       } else {
         emit(RegistrationFailure(response.message.isNotEmpty ? response.message : ApiErrors.unknownError));
       }
+    } on ServerException catch (e) {
+      emit(RegistrationFailure(e.errorModel.message));
     } catch (e) {
       emit(RegistrationFailure(ApiErrors.unknownError));
     }
