@@ -1,16 +1,26 @@
 class RegistrationRequestModel {
-  String data ;
+  String fullName ,email  , username , phoneNumber , password;
 
-   RegistrationRequestModel({required this.data});
+
+   RegistrationRequestModel({required this.fullName , required this.email , required this.username , required this.phoneNumber , required this.password });
 
   factory RegistrationRequestModel.fromJson(Map<String , dynamic > json ){
     return RegistrationRequestModel(
-      data : json['data']
+      fullName : json['fullName'],
+      email : json['email'],
+      username : json['username'],
+      phoneNumber : json['phoneNumber'],
+      password : json['password'],
     );
   }
 
   Map<String,dynamic> toJson () => {
-    'data' : data 
+    'fullName' : fullName,
+     'email' : email,
+      'username' : username,
+       'phoneNumber' : phoneNumber,
+        'password' : password,
+
   };
 
 
