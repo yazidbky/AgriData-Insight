@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:makers_hackathon/core/Errors/api_errors.dart';
 import 'package:makers_hackathon/core/Errors/exceptions.dart';
-import 'package:makers_hackathon/features/Weather/Data/Api/weather_api_service.dart';
-import 'package:makers_hackathon/features/Weather/Data/Models/weather_request_model.dart';
-import 'package:makers_hackathon/features/Weather/Logic/weather_state.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Data/Api/weather_api_service.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Data/Models/weather_request_model.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Logic/weather_state.dart';
 
 class WeatherCubit extends Cubit<WeatherState> {
   final WeatherApiService apiService;

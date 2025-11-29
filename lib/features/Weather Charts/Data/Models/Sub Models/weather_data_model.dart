@@ -1,5 +1,5 @@
-import 'package:makers_hackathon/features/Weather/Data/Models/Sub%20Models/weather_record_model.dart';
-import 'package:makers_hackathon/features/Weather/Data/Models/Sub%20Models/weather_error_detail_model.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Data/Models/Sub%20Models/weather_record_model.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Data/Models/Sub%20Models/weather_error_detail_model.dart';
 
 class WeatherDataModel {
   final int totalDays;

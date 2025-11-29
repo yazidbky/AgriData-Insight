@@ -1,4 +1,4 @@
-import 'package:makers_hackathon/features/Weather/Data/Models/Sub%20Models/weather_data_model.dart';
+import 'package:makers_hackathon/features/Weather%20Charts/Data/Models/Sub%20Models/weather_data_model.dart';
 
 class WeatherResponseModel {
   final int statusCode;
