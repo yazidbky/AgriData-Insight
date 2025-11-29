@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
       HomeContent(userCubit: _userCubit),
       const NotificationScreen(),
       const DailyTasksScreen(),
-      const ProfileScreen(),
+      ProfileScreen(userCubit: _userCubit),
     ];
 
     return Scaffold(

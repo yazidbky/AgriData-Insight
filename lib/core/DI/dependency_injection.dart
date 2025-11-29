@@ -7,6 +7,8 @@ import 'package:makers_hackathon/features/Auth/Registation/Data/Api/registation_
 import 'package:makers_hackathon/features/Auth/Registation/Logic/registration_cubit.dart';
 import 'package:makers_hackathon/features/User/Data/Api/user_api_service.dart';
 import 'package:makers_hackathon/features/User/Logic/user_cubit.dart';
+import 'package:makers_hackathon/features/Weather/Data/Api/weather_api_service.dart';
+import 'package:makers_hackathon/features/Weather/Logic/weather_cubit.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -47,5 +49,15 @@ void setupDependencyInjection() {
   // UserCubit
   getIt.registerFactory<UserCubit>(
     () => UserCubit(getIt<UserApiService>()),
+  );
+
+  // WeatherApiService
+  getIt.registerLazySingleton<WeatherApiService>(
+    () => WeatherApiService(getIt<DioConsumer>()),
+  );
+
+  // WeatherCubit
+  getIt.registerFactory<WeatherCubit>(
+    () => WeatherCubit(getIt<WeatherApiService>()),
   );
 }

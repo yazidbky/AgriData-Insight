@@ -6,9 +6,16 @@ import 'package:makers_hackathon/core/widgets/size_config.dart';
 import 'package:makers_hackathon/features/Profile/Presentation/widgets/profile_header.dart';
 import 'package:makers_hackathon/features/Profile/Presentation/widgets/profile_menu_item.dart';
 import 'package:makers_hackathon/features/Profile/Presentation/widgets/profile_section.dart';
+import 'package:makers_hackathon/features/User/Logic/user_cubit.dart';
+import 'package:makers_hackathon/features/User/Logic/user_state.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final UserCubit userCubit;
+
+  const ProfileScreen({
+    super.key,
+    required this.userCubit,
+  });
 
   void _showAddLandDialog(BuildContext context) {
     ConfirmationDialog.show(
@@ -60,11 +67,26 @@ class ProfileScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Profile header with avatar
-              const ProfileHeader(
-                userName: 'Yazid',
-                location: 'msila,alger',
-                imageUrl: null, // Replace with actual image URL
+              // Profile header with avatar - using StreamBuilder to get user data
+              StreamBuilder<UserState>(
+                stream: userCubit.stream,
+                initialData: userCubit.state,
+                builder: (context, snapshot) {
+                  String userName = 'User';
+                  String userEmail = '';
+
+                  if (snapshot.hasData && snapshot.data is UserSuccess) {
+                    final userData = (snapshot.data as UserSuccess).userData;
+                    userName = userData.fullName;
+                    userEmail = userData.email;
+                  }
+
+                  return ProfileHeader(
+                    userName: userName,
+                    location: userEmail,
+                    imageUrl: null,
+                  );
+                },
               ),
               SizedBox(height: SizeConfig.scaleHeight(4)),
 
