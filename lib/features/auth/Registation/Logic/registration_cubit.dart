@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:makers_hackathon/core/Database/Local/local_storage.dart';
 import 'package:makers_hackathon/core/Errors/api_errors.dart' show ApiErrors;
 import 'package:makers_hackathon/core/Errors/exceptions.dart';
 import 'package:makers_hackathon/features/Auth/Registation/Data/Api/registation_api_service.dart';
@@ -17,9 +18,15 @@ class RegistrationCubit extends Cubit<RegistrationState>{
       final response = await apiService.register(registrationRequestModel);
 
       if (response.statusCode == 201 && response.success) {
-        // TODO: Store token securely using flutter_secure_storage
-        // await secureStorage.write(key: 'auth_token', value: response.data.token);
-        // TODO: Store user data if needed
+        // Store token securely in local storage
+        await LocalStorage.setSecureData('access_token', response.data.token);
+        
+        // Store user info
+        await LocalStorage.storeUserInfo(
+          userId: response.data.farmer.id.toString(),
+          email: response.data.farmer.email,
+        );
+        
         emit(RegistrationSuccess(response.message));
       } else if (response.statusCode == 401) {
         emit(RegistrationFailure(response.message.isNotEmpty ? response.message : ApiErrors.unauthorizedError));

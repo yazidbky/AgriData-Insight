@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:makers_hackathon/core/Database/Local/local_storage.dart';
 import 'package:makers_hackathon/core/Errors/api_errors.dart';
 import 'package:makers_hackathon/core/Errors/exceptions.dart';
 import 'package:makers_hackathon/features/Auth/Login/Data/Api/login_api_service.dart';
@@ -9,17 +10,22 @@ class LoginCubit extends Cubit<LoginState> {
   final LoginApiService apiService ;
   LoginCubit(this.apiService) : super(LoginInitial());
 
-
   Future<void> login(LoginRequestModel loginRequestModel) async {
     emit(LoginLoading());
 
     try {
       final response = await apiService.login(loginRequestModel);
 
-      if (response.statusCode == 200 && response.success == 'true') {
-        // TODO: Store token securely using flutter_secure_storage
-        // await secureStorage.write(key: 'auth_token', value: response.dataModel.token);
-        // TODO: Store user data if needed
+      if (response.statusCode == 200 && response.success == true) {
+        // Store token securely in local storage
+        await LocalStorage.setSecureData('access_token', response.dataModel.token);
+        
+        // Store user info
+        await LocalStorage.storeUserInfo(
+          userId: response.dataModel.farmerData.id.toString(),
+          email: response.dataModel.farmerData.email,
+        );
+        
         emit(LoginSuccess(response.message));
       } else if (response.statusCode == 401) {
         emit(LoginFailure(response.message));

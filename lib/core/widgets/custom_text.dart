@@ -83,9 +83,42 @@ class CustomText extends StatelessWidget {
       textHeightBehavior: textHeightBehavior,
       locale: locale,
       textScaler: textScaler,
-      style:
-          style ??
-          Theme.of(context).textTheme.bodyMedium?.copyWith(
+      style: style ??
+          _buildTextStyle(
+            finalFontSize: finalFontSize,
+            finalFontWeight: finalFontWeight,
+            finalHeight: finalHeight,
+            finalLetterSpacing: finalLetterSpacing,
+            context: context,
+          ),
+    );
+  }
+
+  TextStyle _buildTextStyle({
+    required double finalFontSize,
+    required FontWeight finalFontWeight,
+    required double? finalHeight,
+    required double? finalLetterSpacing,
+    required BuildContext context,
+  }) {
+    // Try to use GoogleFonts, but catch any errors and fallback to default style
+    try {
+      return GoogleFonts.poppins(
+        fontSize: finalFontSize,
+        fontWeight: finalFontWeight,
+        height: finalHeight,
+        letterSpacing: finalLetterSpacing,
+        wordSpacing: wordSpacing,
+        color: color ?? AppColors.primary,
+      ).copyWith(
+        decoration: decoration,
+        textBaseline: textBaseline,
+        shadows: shadows,
+        overflow: TextOverflow.visible,
+      );
+    } catch (e) {
+      // Fallback to default text style if GoogleFonts fails (offline, etc.)
+      return Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: color ?? AppColors.primary,
             fontSize: finalFontSize,
             fontWeight: finalFontWeight,
@@ -95,10 +128,23 @@ class CustomText extends StatelessWidget {
             wordSpacing: wordSpacing,
             textBaseline: textBaseline,
             shadows: shadows,
-            fontFamily: GoogleFonts.poppins().fontFamily,
             overflow: TextOverflow.visible,
-          ),
-    );
+            fontFamily: 'Poppins', // Still try Poppins if available locally
+          ) ??
+          TextStyle(
+            color: color ?? AppColors.primary,
+            fontSize: finalFontSize,
+            fontWeight: finalFontWeight,
+            height: finalHeight,
+            decoration: decoration,
+            letterSpacing: finalLetterSpacing,
+            wordSpacing: wordSpacing,
+            textBaseline: textBaseline,
+            shadows: shadows,
+            overflow: TextOverflow.visible,
+            fontFamily: 'Poppins',
+          );
+    }
   }
 
   double _getAutomaticFontSize() {

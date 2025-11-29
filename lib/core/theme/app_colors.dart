@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-
   // main app colors 
-  static const Color primary = Color.fromRGBO(0, 114, 177, 1);
-  static const Color secondary = Color.fromRGBO(58, 191, 248, 1);
-  static const Color lightPrimary = Color.fromRGBO(0, 114, 177, 0.08);
+  static const Color primary = Color.fromRGBO(46, 125, 50, 1);
+  static const Color secondary = Color.fromRGBO(46, 125, 50, 1);
+  static const Color lightPrimary = Color.fromRGBO(46, 125, 50, 0.08);
   static const Color error = Color.fromRGBO(234, 23, 65, 1);
   static const Color orange = Color.fromRGBO(248, 157, 61, 1);
-  static const Color postUpHover = Color.fromRGBO(0, 184, 116, 1);
-  static const Color postDownHover = Color.fromRGBO(229, 62, 62, 1);
   static const Color backgroundColor = Color.fromRGBO(249, 250, 251, 1);
 
 // global colors 

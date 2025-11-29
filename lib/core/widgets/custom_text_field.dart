@@ -46,6 +46,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixWidget;
   final String? obscureIcon;
   final String? visibleIcon;
+  final bool showObscureToggle;
   
   // Styling
   final Color? fillColor;
@@ -111,6 +112,7 @@ class CustomTextField extends StatefulWidget {
     this.suffixWidget,
     this.obscureIcon,
     this.visibleIcon,
+    this.showObscureToggle = true,
     
     // Styling
     this.fillColor,
@@ -385,8 +387,8 @@ class _CustomTextFieldState extends State<CustomTextField>
   }
   
   // Obscure text toggle (password visibility)
-  // Fixed: Check if obscureText is true, not just if icons are provided
-  if (widget.obscureText) {
+  // Only show if obscureText is true AND showObscureToggle is true
+  if (widget.obscureText && widget.showObscureToggle) {
     final iconAsset = _isObscured 
         ? (widget.obscureIcon ?? AppAssets.hide)
         : (widget.visibleIcon ?? AppAssets.show);

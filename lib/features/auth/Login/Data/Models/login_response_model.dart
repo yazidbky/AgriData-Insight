@@ -1,17 +1,16 @@
 import 'package:makers_hackathon/features/Auth/Login/Data/Models/Sub%20Models/data_model.dart';
 
 class LoginResponseModel {
+    int statusCode;
+    DataModel dataModel;
+    String message;
+    bool success;
 
-    int statusCode ;
-    DataModel dataModel ;
-    String message , success ;
-
-  
   LoginResponseModel({
     required this.statusCode,
-    required this.dataModel ,
-    required this.message , 
-    required this.success
+    required this.dataModel,
+    required this.message,
+    required this.success,
   });
 
    factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
@@ -19,7 +18,7 @@ class LoginResponseModel {
      statusCode: json['statusCode'] ?? 0,
      dataModel: DataModel.fromJson(json['data'] ?? {}),
      message: json['message'] ?? '',
-     success: json['success'] ?? '',
+     success: json['success'] ?? false,
     );
   }
 

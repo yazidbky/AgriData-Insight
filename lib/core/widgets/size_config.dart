@@ -28,7 +28,7 @@ class SizeConfig {
 
   // Text-scaling limits
   static const double _maxTextScaleFactor = 1.5;
-  static const double _defaultTextScaleCap = 1.3;
+  static const double _defaultTextScaleCap = 1.2;
 
   /// Initialize or re-initialize SizeConfig with current BuildContext.
   /// Safe to call on every build if needed (cheap operations only).
