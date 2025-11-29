@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> screens = [
       HomeContent(userCubit: _userCubit),
       const NotificationScreen(),
-      const DailyTasksScreen(),
+      DailyTasksScreen(userCubit: _userCubit),
       ProfileScreen(userCubit: _userCubit),
     ];
 

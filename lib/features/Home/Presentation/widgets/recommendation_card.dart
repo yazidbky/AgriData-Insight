@@ -4,11 +4,19 @@ import 'package:makers_hackathon/core/widgets/custom_text.dart';
 import 'package:makers_hackathon/core/widgets/size_config.dart';
 
 class RecommendationCard extends StatelessWidget {
-  final String recommendation;
+  final String cropName;
+  final double similarityPercentage;
+  final String? growingSeason;
+  final String? waterRequirement;
+  final int? rank;
 
   const RecommendationCard({
     super.key,
-    this.recommendation = 'Irrigate your crops for 20 minutes this evening',
+    required this.cropName,
+    required this.similarityPercentage,
+    this.growingSeason,
+    this.waterRequirement,
+    this.rank,
   });
 
   @override
@@ -30,18 +38,64 @@ class RecommendationCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(SizeConfig.scaleRadius(2)),
             ),
             child: Icon(
-              Icons.water_drop_outlined,
-              color: const Color.fromRGBO(25, 118, 210, 1), // Dark blue
+              Icons.eco_outlined,
+              color: AppColors.primary,
               size: SizeConfig.scaleText(24),
             ),
           ),
           SizedBox(width: SizeConfig.scaleWidth(4)),
           Expanded(
-            child: CustomText(
-              recommendation,
-              fontSize: 14,
-              color: AppColors.black,
-              fontWeight: FontWeight.w500,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    if (rank != null) ...[
+                      Container(
+                        padding: SizeConfig.scalePadding(horizontal: 2, vertical: 0.5),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(SizeConfig.scaleRadius(1)),
+                        ),
+                        child: CustomText(
+                          '#$rank',
+                          fontSize: 12,
+                          color: AppColors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: SizeConfig.scaleWidth(2)),
+                    ],
+                    Expanded(
+                      child: CustomText(
+                        cropName,
+                        fontSize: 16,
+                        color: AppColors.black,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: SizeConfig.scaleHeight(0.5)),
+                CustomText(
+                  '${similarityPercentage.toStringAsFixed(1)}% match',
+                  fontSize: 14,
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w500,
+                ),
+                if (growingSeason != null || waterRequirement != null) ...[
+                  SizedBox(height: SizeConfig.scaleHeight(0.5)),
+                  CustomText(
+                    [
+                      if (growingSeason != null) growingSeason,
+                      if (waterRequirement != null) '$waterRequirement water',
+                    ].join(' • '),
+                    fontSize: 12,
+                    color: AppColors.grey600,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ],
+              ],
             ),
           ),
         ],
